@@ -1,3 +1,5 @@
+import logging
+logging.root.setLevel(logging.DEBUG)
 ############################################################################################################
 # Description: This launch file starts the vizualization of the workbench with the UR10E robot in RViz.
 #              The launch file starts the following nodes:
@@ -7,6 +9,7 @@
 # Usage:
 #   $ ros2 launch prl_ur5_description view_workbench.launch.py
 ############################################################################################################
+
 from launch import LaunchDescription
 from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
 from launch_ros.actions import Node
@@ -23,7 +26,8 @@ def generate_launch_description():
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),  # Find the xacro executable
             " ", 
-            PathJoinSubstitution([FindPackageShare("prl_ur10e_description"), "urdf", "ur10e_complete_setup.urdf.xacro"]),
+            PathJoinSubstitution([FindPackageShare("prl_ur10e_description"), "urdf", "ur10e_complete_setup.urdf.xacro"])
+            ,
             " ",
             "gz_sim:=",
             "false",

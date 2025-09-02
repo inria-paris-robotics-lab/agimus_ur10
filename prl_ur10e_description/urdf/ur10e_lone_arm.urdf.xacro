@@ -1,20 +1,10 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://wiki.ros.org/xacro">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- ur5 -->
+    <!-- ur10e -->
     <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
     <xacro:include filename="$(find ur_description)/urdf/inc/ur_joint_control.xacro" />
     <xacro:include filename="$(find ur_robot_driver)/urdf/ur.ros2_control.xacro"/>
-
-<!-- TODO -->
-    <!-- force sensor-->
-    <!-- <xacro:include filename="$(find prl_ur10e_description)/urdf/_force_sensor.urdf.xacro"/> --> 
-
-    <!-- gripper -->
-    <!-- <xacro:include filename="$(find prl_ur10e_description)/urdf/_gripper.urdf.xacro"/> -->
-
-    <!-- camera -->
-    <!-- <xacro:include filename="$(find prl_ur10e_description)/urdf/_camera_sensor.urdf.xacro"/> -->
 
     <!-- Macro to define the complete arm -->
     <xacro:macro name="arm" params="
@@ -45,8 +35,7 @@
 
         <!-- UR10 -->
         <xacro:ur_robot
-            name="${prefix}arm"
-            tf_prefix="${prefix}"
+            name="ur10"
             parent="${parent}"
             joint_limits_parameters_file="${joint_limits_parameters_file}"
             kinematics_parameters_file="${kinematics_parameters_file}"
@@ -62,7 +51,7 @@
         <!-- ROS2 control if simulation -->
         <xacro:if value="${gz_sim}">
 
-            <ros2_control name="${prefix}arm" type="system">
+            <ros2_control name="arm" type="system">
                 
                 <hardware>
                     <plugin>gz_ros2_control/GazeboSimSystem</plugin>
@@ -94,13 +83,6 @@
             /> 
         </xacro:unless>
 
-        <!-- Force sensor -->
-        <!-- <xacro:force_sensor
-            prefix="${prefix}"
-            parent="tool0"
-            gz_sim="${gz_sim}"
-        /> -->
-
         <!-- Tool frame -->
         <link name="${prefix}tool"/>
 
@@ -109,11 +91,6 @@
             <parent link="${prefix}robotiq_ft_frame_id"/>
             <child link="${prefix}tool"/>
         </joint>
-
-        <!-- Gripper -->
-        <!-- <xacro:gripper gripper="${gripper}" prefix='${prefix}' parent="${prefix}tool" pose="${gripper_pose}" hardware_interface="${hw_interface}" gz_sim="${gz_sim}"/> -->
-
-
 
     </xacro:macro>
  

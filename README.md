@@ -68,7 +68,7 @@ This will create the `ws` directory in your home folder and the `src` directory 
 
 ```bash
 cd ws/src
-git clone https://github.com/inria-paris-robotics-lab/prl_ur5_ros2.git
+git clone https://github.com/inria-paris-robotics-lab/agimus_ur10.git
 ```
 
 #### Install Dependencies

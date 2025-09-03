@@ -1,5 +1,3 @@
-import logging
-logging.root.setLevel(logging.DEBUG)
 ############################################################################################################
 # Description: This launch file starts the vizualization of the workbench with the UR10E robot in RViz.
 #              The launch file starts the following nodes:

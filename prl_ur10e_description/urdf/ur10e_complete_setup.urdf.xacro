@@ -13,11 +13,35 @@
 
   <!-- Global frame -->
   <link name="prl_ur10e_base"/>
+
+  <!-- Base -->
+  <!-- <material name="Blue">
+    <color rgba="${0/255} ${30/255} ${70/255} 1.0"/>
+  </material> -->
+
+  <link name="table_link">
+    <!-- <visual>
+      <geometry>
+        <mesh filename="file://$(find prl_ur5_description)/model/vention_table.stl"/>
+      </geometry>
+      <material name="Blue"/>
+    </visual> -->
+    <!-- <collision>
+      <geometry>
+        <mesh filename="file://$(find prl_ur5_description)/model/vention_table.stl"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint name="table" type="fixed">
+    <parent link="prl_ur10e_base"/>
+    <child link = "table_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
   
   <!-- Lone Arm -->
   <xacro:property name="arm" value="${setup_file.get('arm')}"/>
-  <xacro:arm prefix="prefix_"
-                 parent="prl_ur10e_base"
+  <xacro:arm prefix="ur10_"
+                 parent="table_link"
                  pose="${arm['arm_pose']}"
                  sensors="false"
                  gz_sim="$(arg gz_sim)"
@@ -39,7 +63,7 @@
   <joint name="base_2_ur" type="fixed">
     <parent link="base_link" />
     <child link="prl_ur10e_base" />
-    <origin xyz="0 0 0.8" rpy="0 0 0" />
+    <origin xyz="0 0 0.81" rpy="0 0 0" />
   </joint> 
 
 </robot>

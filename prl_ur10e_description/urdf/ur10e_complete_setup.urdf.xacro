@@ -20,6 +20,7 @@
   </material> -->
 
   <link name="table_link">
+  <!-- TODO -->
     <!-- <visual>
       <geometry>
         <mesh filename="file://$(find prl_ur5_description)/model/vention_table.stl"/>
@@ -44,12 +45,15 @@
                  parent="table_link"
                  pose="${arm['arm_pose']}"
                  sensors="false"
+                 gripper="${arm.get('gripper')}"
+                 gripper_pose="${arm.get('gripper_pose')}"
                  gz_sim="$(arg gz_sim)"
                  joint_limits_parameters_file="$(find prl_ur10e_robot_configuration)/config/${arm.get('arm_joint_limits')}"
                  kinematics_parameters_file="$(find prl_ur10e_robot_configuration)/config/${arm.get('arm_kinematics')}"
                  network = "${arm.get('network')}"
                  />
 
+  <!-- Gazebosim plugin-->
   <xacro:if value="$(arg gz_sim)">
     <gazebo>
         <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">

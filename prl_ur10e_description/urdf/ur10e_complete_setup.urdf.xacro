@@ -6,17 +6,18 @@
 
   <!-- Setup files -->
   <xacro:arg name="controller_file" default="$(find prl_ur10e_control)/config/ur10e_controller.yaml"/>  
-  <xacro:property name="setup_file" value="${xacro.load_yaml('$(find ur10e_robot_configuration)/config/standard_setup.yaml')}"/> 
+  <xacro:property name="setup_file" value="${xacro.load_yaml('$(find prl_ur10e_robot_configuration)/config/standard_setup.yaml')}"/> 
 
   <!-- ur10e arm -->
   <xacro:include filename="$(find prl_ur10e_description)/urdf/ur10e_lone_arm.urdf.xacro"/>
 
   <!-- Global frame -->
-  <link name="ur10e_base"/>
+  <link name="prl_ur10e_base"/>
   
   <!-- Lone Arm -->
   <xacro:property name="arm" value="${setup_file.get('arm')}"/>
-  <xacro:arm parent="prl_ur10e_base"
+  <xacro:arm prefix="prefix_"
+                 parent="prl_ur10e_base"
                  pose="${arm['arm_pose']}"
                  sensors="false"
                  gz_sim="$(arg gz_sim)"

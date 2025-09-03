@@ -10,11 +10,12 @@
     <xacro:macro name="arm" params="
         name:=arm
         ur_type:=ur10e
+        prefix
         parent
         pose
         sensors
-        gripper
-        gripper_pose
+        gripper:=None
+        gripper_pose:=None
         camera:= None
         camera_pose:= None
         joint_limits_parameters_file:='$(find ur_description)/config/ur10e/joint_limits.yaml'
@@ -36,6 +37,7 @@
         <!-- UR10 -->
         <xacro:ur_robot
             name="ur10"
+            tf_prefix="${prefix}"
             parent="${parent}"
             joint_limits_parameters_file="${joint_limits_parameters_file}"
             kinematics_parameters_file="${kinematics_parameters_file}"
@@ -64,7 +66,7 @@
             </ros2_control>
         </xacro:if>
         <!-- ROS2 control if real robot -->
-        <xacro:unless value="${gz_sim}">
+        <!-- <xacro:unless value="${gz_sim}">
             <xacro:ur_ros2_control
                 name="ur10"
                 tf_prefix="${prefix}"
@@ -81,16 +83,16 @@
                 script_sender_port="${network['script_sender_port']}"
                 trajectory_port="${network['trajectory_port']}"s
             /> 
-        </xacro:unless>
+        </xacro:unless> -->
 
         <!-- Tool frame -->
-        <link name="${prefix}tool"/>
+        <!-- <link name="${prefix}tool"/>
 
         <joint name="${prefix}tool_joint" type="fixed">
             <origin xyz="0 0 0" rpy="0 0 ${-pi}"/>
             <parent link="${prefix}robotiq_ft_frame_id"/>
             <child link="${prefix}tool"/>
-        </joint>
+        </joint> -->
 
     </xacro:macro>
  

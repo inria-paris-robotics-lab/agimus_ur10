@@ -15,34 +15,55 @@
   <link name="prl_ur10e_base"/>
 
   <!-- Base -->
-  <!-- <material name="Blue">
+  <material name="Blue">
     <color rgba="${0/255} ${30/255} ${70/255} 1.0"/>
-  </material> -->
+  </material>
 
   <link name="table_link">
-  <!-- TODO -->
-    <!-- <visual>
+    <visual>
       <geometry>
-        <mesh filename="file://$(find prl_ur5_description)/model/vention_table.stl"/>
+        <mesh filename="file://$(find prl_ur10e_description)/model/UR10e_stand.stl"/>
       </geometry>
       <material name="Blue"/>
-    </visual> -->
-    <!-- <collision>
+    </visual> 
+    <collision>
       <geometry>
-        <mesh filename="file://$(find prl_ur5_description)/model/vention_table.stl"/>
+        <mesh filename="file://$(find prl_ur10e_description)/model/UR10e_stand.stl"/>
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint name="table" type="fixed">
-    <parent link="prl_ur10e_base"/>
+    <parent link="base_link"/>
     <child link = "table_link"/>
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
   </joint>
+
+  <!-- left wall -->
+  <!-- <link name="leftwall_link">
+    <visual>
+      <geometry>
+        <box size="0.75 0.75 0.82"/>
+      </geometry>
+      <material name="grey"><color rgba="0.8 0.8 0.8 1"/></material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.75 0.75 0.82"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="leftwall_fix" type="fixed">
+    <parent link="prl_ur10e_base"/>
+    <child link = "leftwall_link"/>
+    <origin xyz="0 0 -0.41" rpy="0.0 0.0 0.0"/>
+  </joint> -->
+
   
   <!-- Lone Arm -->
   <xacro:property name="arm" value="${setup_file.get('arm')}"/>
   <xacro:arm prefix="ur10_"
-                 parent="table_link"
+                 parent="prl_ur10e_base"
                  pose="${arm['arm_pose']}"
                  sensors="false"
                  gripper="${arm.get('gripper')}"
@@ -67,7 +88,7 @@
   <joint name="base_2_ur" type="fixed">
     <parent link="base_link" />
     <child link="prl_ur10e_base" />
-    <origin xyz="0 0 0.81" rpy="0 0 0" />
+    <origin xyz="0 0 0.82" rpy="0 0 0" />
   </joint> 
 
 </robot>

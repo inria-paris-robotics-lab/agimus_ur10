@@ -17,8 +17,8 @@
         parent
         pose
         sensors
-        gripper:=None
-        gripper_pose:=None
+        gripper
+        gripper_pose
         camera:= None
         camera_pose:= None
         joint_limits_parameters_file:='$(find ur_description)/config/ur10e/joint_limits.yaml'

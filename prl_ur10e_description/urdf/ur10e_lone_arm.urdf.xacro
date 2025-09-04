@@ -69,7 +69,7 @@
             </ros2_control>
         </xacro:if>
         <!-- ROS2 control if real robot -->
-        <!-- <xacro:unless value="${gz_sim}">
+        <xacro:unless value="${gz_sim}">
             <xacro:ur_ros2_control
                 name="${prefix}arm"
                 tf_prefix="${prefix}"
@@ -84,10 +84,10 @@
                 script_command_port="${network['script_command_port']}"
                 reverse_port="${network['reverse_port']}"
                 script_sender_port="${network['script_sender_port']}"
-                trajectory_port="${network['trajectory_port']}"s
+                trajectory_port="${network['trajectory_port']}"
             /> 
             
-        </xacro:unless>  -->
+        </xacro:unless>  
 
         <!-- Gripper -->
         <xacro:gripper gripper="${gripper}" prefix='${prefix}' parent="${prefix}tool" pose="${gripper_pose}" hardware_interface="${hw_interface}" gz_sim="${gz_sim}"/>

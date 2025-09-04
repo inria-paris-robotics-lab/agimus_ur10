@@ -37,28 +37,6 @@
     <child link = "table_link"/>
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
   </joint>
-
-  <!-- left wall -->
-  <!-- <link name="leftwall_link">
-    <visual>
-      <geometry>
-        <box size="0.75 0.75 0.82"/>
-      </geometry>
-      <material name="grey"><color rgba="0.8 0.8 0.8 1"/></material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.75 0.75 0.82"/>
-      </geometry>
-    </collision>
-  </link>
-
-  <joint name="leftwall_fix" type="fixed">
-    <parent link="prl_ur10e_base"/>
-    <child link = "leftwall_link"/>
-    <origin xyz="0 0 -0.41" rpy="0.0 0.0 0.0"/>
-  </joint> -->
-
   
   <!-- Lone Arm -->
   <xacro:property name="arm" value="${setup_file.get('arm')}"/>

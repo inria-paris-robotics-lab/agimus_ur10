@@ -480,27 +480,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        leftwall_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        mantis/base_link/alpha_camera_depth:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        mantis/base_link/bravo_camera_depth:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        mantis/base_link/charlie_camera_depth:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        mantis/base_link/spare_camera_depth:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         prl_ur5_base:
           Alpha: 1
           Show Axes: false

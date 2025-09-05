@@ -42,34 +42,35 @@ from launch.conditions import IfCondition
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 import yaml
-from pathlib import Path
 
 def launch_setup(context):
-    # Launch Arguments 
+    ###### Launch Arguments ######
     launch_rviz = LaunchConfiguration('launch_rviz', default=True)
     gazebo_gui = LaunchConfiguration('gazebo_gui', default=True)
-    # Load the configuration file
+
+    # Load the configuration files
     config_file = os.path.join(get_package_share_directory('prl_ur10e_robot_configuration'), 'config', 'standard_setup.yaml')
-    description_file=PathJoinSubstitution([FindPackageShare('prl_ur10e_description'),'urdf', 'ur10e_complete_setup.urdf.xacro'])
+    description_file=PathJoinSubstitution([FindPackageShare("prl_ur10e_description"), "urdf", "ur10e_complete_setup.urdf.xacro"])
     bridge_params = os.path.join(get_package_share_directory('prl_ur10e_gazebo'), 'config', 'gz_bridge.yaml')
     rviz_config_file = PathJoinSubstitution([FindPackageShare('prl_ur10e_gazebo'),'rviz', 'config.rviz'])
     default_world_file = PathJoinSubstitution([FindPackageShare('prl_ur10e_gazebo'),'world', 'default_world.sdf'])
     onrobot_world_file = PathJoinSubstitution([FindPackageShare('prl_ur10e_gazebo'),'world', 'onrobot_world.sdf'])
     # camera_bridge_params = os.path.join(get_package_share_directory('prl_ur10e_gazebo'), 'config', 'camera_bridge.yaml')
-    config_file = Path(get_package_share_directory('prl_ur10e_robot_configuration')) / 'config/standard_setup.yaml'
+
     config_controller_path = os.path.join(get_package_share_directory('prl_ur10e_robot_configuration'), 'config', 'controller_setup.yaml')
+
     with open(config_controller_path, 'r') as setup_file:
         config_controller = yaml.safe_load(setup_file)
+
     all_controllers = config_controller.get('controllers')
     activate_controllers = all_controllers.get('active_controllers', [])
     loaded_controllers = all_controllers.get('inactive_controllers', [])
 
     ###### Robot description ######
-
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name='xacro')]),
-            ' ',
+            " ",
             description_file,
             " ",
             "gz_sim:=",
@@ -78,6 +79,7 @@ def launch_setup(context):
         ]
     )
     robot_description = {'robot_description':  ParameterValue(value=robot_description_content, value_type=str)}
+
     # Robot state publisher
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -99,8 +101,7 @@ def launch_setup(context):
     ###### Gazebo ######
 
     # Gazebo launch 
-
-    with config_file.open('r') as setup_file:
+    with open(config_file, 'r') as setup_file:
         config = yaml.safe_load(setup_file)
 
     gripper = config.get('arm', {}).get('gripper_controller', {})
@@ -135,17 +136,17 @@ def launch_setup(context):
         parameters=[{"use_sim_time": True}],
     )
 
-    # # Bridge
-    # bridge = Node(
-    #     package='ros_gz_bridge',
-    #     executable='parameter_bridge',
-    #     arguments=[
-    #         '--ros-args',
-    #         '-p',
-    #         f'config_file:={bridge_params}',
-    #     ],
-    #     output='screen',
-    # )
+    # Bridge
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '--ros-args',
+            '-p',
+            f'config_file:={bridge_params}',
+        ],
+        output='screen',
+    )
     # # Camera bridge
     # camera_bridge= Node(
     #     package='ros_gz_bridge',
@@ -187,12 +188,10 @@ def launch_setup(context):
         }.items(),
     )
     # Gripper controllers
-    config_path = Path(config_file) 
-    with config_path.open('r') as setup_file:
+    with open(config_file, 'r') as setup_file:
         config = yaml.safe_load(setup_file)
 
-    gripper_controller = config.get('arm')['gripper_controller']
-   
+    gripper_controller = config.get('arm')['gripper_controller']   
 
     gripper_controller = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -210,6 +209,7 @@ def launch_setup(context):
 
     return [robot_state_publisher, 
             gazebo,
+            bridge,
             ignition_spawn_entity,
             RegisterEventHandler(
                 event_handler=OnProcessExit(

@@ -4,14 +4,9 @@
   gz_type_name: "gz.msgs.Clock"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "/left_force_torque"
-  gz_topic_name: "left_force_torque"
-  ros_type_name: "geometry_msgs/msg/Wrench"
-  gz_type_name: "gz.msgs.Wrench"
-  direction: GZ_TO_ROS
+# - ros_topic_name: "/force_torque"
+#   gz_topic_name: "force_torque"
+#   ros_type_name: "geometry_msgs/msg/Wrench"
+#   gz_type_name: "gz.msgs.Wrench"
+#   direction: GZ_TO_ROS
 
-- ros_topic_name: "/right_force_torque"
-  gz_topic_name: "right_force_torque"
-  ros_type_name: "geometry_msgs/msg/Wrench"
-  gz_type_name: "gz.msgs.Wrench"
-  direction: GZ_TO_ROS

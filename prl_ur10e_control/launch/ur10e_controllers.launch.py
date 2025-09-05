@@ -1,5 +1,5 @@
 ############################################################################################################
-# Description: This launch file is used to load the controllers for the UR10e robot.
+# Description: This launch file is used to load the controllers for the ur10e robot.
 # The controllers are loaded in the controller manager and can be activated or deactivated.
 # Arguments:
 # - activate_joint_controller: Activate wanted loaded joint controller.

@@ -198,7 +198,7 @@ def launch_setup(context):
             PathJoinSubstitution([
                 FindPackageShare('prl_ur10e_control'),
                 'launch',
-                'ur10e_controllers.launch.py',
+                'ur10e_gripper_controllers.launch.py',
             ])
         ]),
         launch_arguments=[
@@ -222,25 +222,6 @@ def launch_setup(context):
             ),
             rviz_node,
             ]
-   
-    # return [robot_state_publisher, 
-    #         gazebo,
-    #         bridge,
-    #         ignition_spawn_entity,
-    #         RegisterEventHandler(
-    #             event_handler=OnProcessExit(
-    #             target_action=ignition_spawn_entity,
-    #             on_exit=[
-    #                     controller_launch,
-    #                     left_gripper_controller,
-    #                     right_gripper_controller,
-    #                     camera_bridge,
-    #                     align_depth,
-    #                         ],
-    #             )
-    #         ),
-    #         rviz_node,
-    #         ]
 
 def generate_launch_description():
     declared_arguments = []

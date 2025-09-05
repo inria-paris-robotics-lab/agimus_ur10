@@ -4,5 +4,5 @@ gripper_controller:
     action_monitor_rate: 100.0
     allow_stalling: false
     goal_tolerance: 0.0002
-    joint: left_gripper_joint
+    joint: ur10_gripper_joint
     max_effort: 0.0

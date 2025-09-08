@@ -24,6 +24,8 @@ def launch_setup(context):
     controller = LaunchConfiguration("gripper_controller").perform(context)
     prefix = LaunchConfiguration("prefix").perform(context)
 
+    print("TAGTAG "+  str(controller))
+
     # Start the controller based on the argument
     controllers_to_start = []
     if controller == "weiss-gripper":

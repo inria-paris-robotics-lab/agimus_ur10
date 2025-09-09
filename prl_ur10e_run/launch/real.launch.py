@@ -1,3 +1,5 @@
+# import logging
+# logging.root.setLevel(logging.DEBUG)
 ############################################################################################################
 # Description: This file is used to connect the real workbench with the ros2 environment. 
 #              The launch file starts the following nodes:
@@ -75,7 +77,6 @@ def launch_setup(context):
     launch_moveit = LaunchConfiguration("launch_moveit")
 
     ###### Calibration ######
-
     calib = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
@@ -91,7 +92,6 @@ def launch_setup(context):
     )
 
     ###### Controllers ######
-
     # Controller Manager
     control_node = Node(
         package="controller_manager",
@@ -104,10 +104,10 @@ def launch_setup(context):
     )
     
     # Spawn controllers
-    active_controllers = ",".join([
-        "io_and_status_controller",
-    ]) + "," + ",".join(activate_controllers)
+    active_controllers = ",".join(["io_and_status_controller"]) + "," + ",".join(activate_controllers)
+    
     inactive_controllers = ",".join(loaded_controllers)
+
     print("Active controllers: ", active_controllers)
     print("Inactive controllers: ", inactive_controllers)
     controller_spawners = IncludeLaunchDescription(
@@ -229,7 +229,7 @@ def launch_setup(context):
     moveit_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
-                FindPackageShare("prl_ur5_moveit"),
+                FindPackageShare("prl_ur10e_moveit"),
                 "launch",
                 "start_moveit.launch.py",
             ])
@@ -241,19 +241,15 @@ def launch_setup(context):
     )
 
     return [
-        right_calib,
-        left_calib,
+        calib,
         control_node,
         controller_spawners,
-        left_gripper_controller,
-        right_gripper_controller,
-        left_dashboard_client_node,
-        right_dashboard_client_node,
-        left_urscript_interface,
-        right_urscript_interface,
+        gripper_controller,
+        dashboard_client_node,
+        urscript_interface,
         rsp,
         rviz_node,
-        camera_launch,
+        # camera_launch,
         moveit_launch,
     ]
 
@@ -308,7 +304,7 @@ def generate_launch_description():
                         "config",
                     ]
                 ),
-                "/ur5_update_rate.yaml",
+                "/ur10e_update_rate.yaml",
             ],
         )
     )

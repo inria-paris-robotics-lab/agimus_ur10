@@ -10,10 +10,6 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="ur10e_arm">
-        <joint name="base_2_ur"/>
-        <joint name="ur10_base_joint"/>
-        <joint name="ur10_base_link-base_fixed_joint"/>
-        <joint name="ur10_base_link-base_link_inertia"/>
         <joint name="ur10_shoulder_pan_joint"/>
         <joint name="ur10_shoulder_lift_joint"/>
         <joint name="ur10_elbow_joint"/>
@@ -23,7 +19,6 @@
         <joint name="ur10_wrist_3-flange"/>
         <joint name="ur10_flange-tool0"/>
         <joint name="ur10_tool_joint"/>
-        <joint name="ur10_wrist_3_link-ft_frame"/>
     </group>
     <group name="ur10e_gripper">
         <joint name="ur10_gripper_joint"/>
@@ -53,6 +48,8 @@
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="ur10e_gripper" parent_link="ur10_tool" group="ur10e_gripper" parent_group="ur10e_arm"/>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="wrldbase" type="fixed" parent_frame="world" child_link="base_link"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="table_link" link2="ur10_base_link_inertia" reason="Adjacent"/>
     <disable_collisions link1="table_link" link2="ur10_shoulder_link" reason="Never"/>

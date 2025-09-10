@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: prl_ur10e_description
+    relative_path: urdf/ur10e_complete_setup.urdf.xacro
+  srdf:
+    relative_path: config/ur10e.srdf
+  package_settings:
+    author_name: Louise Manson
+    author_email: louise.manson@inria.fr
+    generated_timestamp: 1757504834

@@ -7,8 +7,10 @@ moveit_simple_controller_manager:
     - ur10e_arm_controller
     - ur10e_gripper_controller
 
-  ur10e_arm_controller:
+  joint_trajectory_controller:
+    action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
+    default: true
     joints:
       - ur10_shoulder_pan_joint
       - ur10_shoulder_lift_joint
@@ -16,7 +18,10 @@ moveit_simple_controller_manager:
       - ur10_wrist_1_joint
       - ur10_wrist_2_joint
       - ur10_wrist_3_joint
-  ur10e_gripper_controller:
-    type: FollowJointTrajectory
+
+  gripper_controller:
+    type: GripperCommand
     joints:
       - ur10_gripper_joint
+    action_ns: gripper_cmd
+    default: true

@@ -171,8 +171,9 @@ def launch_setup(context):
     # )
 
     ###### Controllers ######
-    inactive_controller = ","+ "io_and_status_controller" + "," + ",".join(loaded_controllers)
+    inactive_controller = ",".join(["io_and_status_controller"]) +"," + ",".join(loaded_controllers)
     active_controllers = ",".join(activate_controllers)
+
     # UR controllers
     controller_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([

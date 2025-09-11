@@ -53,7 +53,7 @@
     </xacro:if>
 
     <xacro:if value="${setup['arm']['gripper'].startswith('custom:')}">
-        <xacro:include filename="$(find prl_ur10_robot_configuration)/urdf/${setup['arm']['gripper'][7:]}.srdf.xacro"/>
+        <xacro:include filename="$(find prl_ur10e_robot_configuration)/urdf/${setup['arm']['gripper'][7:]}.srdf.xacro"/>
         <xacro:property name="ur10_gripper_name" value="${setup['arm']['gripper'][7:]}"/>
     </xacro:if>
 

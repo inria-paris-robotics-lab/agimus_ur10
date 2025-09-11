@@ -3,13 +3,18 @@
     This is a format for representing semantic information about the robot structure.
     A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
 -->
-<robot name="ur10e">
+<robot name="ur10e" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:arg name="setup_name" default="standard_setup"/>
+    <xacro:property name="setup" value="${xacro.load_yaml('$(find prl_ur10e_robot_configuration)/config/$(arg setup_name).yaml')}"/>
+    <xacro:include filename="$(find onrobot_description)/urdf/onrobot_rg.srdf.xacro"/>
+
     <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
     <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
     <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
-    <group name="ur10e_arm">
+    <!--  ARM-->
+    <group name="ur10_arm">
         <joint name="ur10_shoulder_pan_joint"/>
         <joint name="ur10_shoulder_lift_joint"/>
         <joint name="ur10_elbow_joint"/>
@@ -18,13 +23,50 @@
         <joint name="ur10_wrist_3_joint"/>
         <joint name="ur10_wrist_3-flange"/>
         <joint name="ur10_flange-tool0"/>
+        <joint name="ur10_ft300_fix"/>
+        <joint name="ur10_ft300_mounting_plate_joint"/>
+        <joint name="ur10_measurment_joint"/>
         <joint name="ur10_tool_joint"/>
     </group>
-    <!-- <group name="ur10e_gripper">
-        <joint name="ur10_gripper_joint"/>
-    </group> -->
+
+    <!-- GRIPPER-->
+    <!-- if weiss-wsg50 -->
+    <xacro:if value="${setup['arm']['gripper'] == 'weiss-wsg50'}">
+        <xacro:include filename="$(find wsg_50_simulation)/urdf/wsg_50.srdf.xacro"/>
+        <xacro:property name="ur10_gripper_name" value="weiss-wsg50"/>
+    </xacro:if>
+
+    
+    <!-- if onrobot-rg2 -->
+    <xacro:if value="${setup['arm']['gripper'] == 'onrobot-rg2'}">
+        <xacro:property name="ur10_gripper_name" value="onrobot_rg2"/>
+    </xacro:if>
+
+    <!-- if onrobot-rg6 -->
+    <xacro:if value="${setup['arm']['gripper'] == 'onrobot-rg6'}">
+        <xacro:property name="ur10_gripper_name" value="onrobot_rg6"/>
+    </xacro:if>
+
+    <!-- if onrobot-rg6-v2 -->
+    <xacro:if value="${setup['arm']['gripper'] == 'onrobot-rg6-v2'}">
+        <xacro:property name="ur10_gripper_name" value="onrobot_rg6_v2"/>
+    </xacro:if>
+
+    <xacro:if value="${setup['arm']['gripper'].startswith('custom:')}">
+        <xacro:include filename="$(find prl_ur10_robot_configuration)/urdf/${setup['arm']['gripper'][7:]}.srdf.xacro"/>
+        <xacro:property name="ur10_gripper_name" value="${setup['arm']['gripper'][7:]}"/>
+    </xacro:if>
+
+    <!-- Define gripper group and define its states-->
+    <xacro:call macro="${ur10_gripper_name}_group_define" group_name="ur10_gripper" prefix='ur10_gripper'/>
+
+    <!-- Create autocolision and collision tags -->
+    <xacro:call macro="${ur10_gripper_name}_autocol" prefix='ur10_gripper'/>
+    <xacro:call macro="${ur10_gripper_name}_col_with" prefix='ur10_gripper' link='ur10_wrist_3_link'/>
+
+
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
-    <group_state name="UR_default_home" group="ur10e_arm">
+    <group_state name="UR_default_home" group="ur10_arm">
         <joint name="ur10_elbow_joint" value="0"/>
         <joint name="ur10_shoulder_lift_joint" value="-1.5707"/>
         <joint name="ur10_shoulder_pan_joint" value="0"/>
@@ -32,13 +74,8 @@
         <joint name="ur10_wrist_2_joint" value="0"/>
         <joint name="ur10_wrist_3_joint" value="0"/>
     </group_state>
-    <!-- <group_state name="gripper_open" group="ur10e_gripper">
-        <joint name="ur10_gripper_joint" value="0.11"/>
-    </group_state>
-    <group_state name="gripper_closed" group="ur10e_gripper">
-        <joint name="ur10_gripper_joint" value="0"/>
-    </group_state> -->
-    <group_state name="homing_shadow" group="ur10e_arm">
+
+    <group_state name="homing_shadow" group="ur10_arm">
         <joint name="ur10_elbow_joint" value="2.8638"/>
         <joint name="ur10_shoulder_lift_joint" value="-1.4232"/>
         <joint name="ur10_shoulder_pan_joint" value="0"/>
@@ -46,54 +83,24 @@
         <joint name="ur10_wrist_2_joint" value="1.5707"/>
         <joint name="ur10_wrist_3_joint" value="0"/>
     </group_state>
+
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="ur10e_gripper" parent_link="ur10_tool" group="ur10e_gripper" parent_group="ur10e_arm"/>
+    <end_effector name="ur10_tool" parent_link="ur10_tool" group="ur10_gripper" parent_group="ur10_arm"/>
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="wrldbase" type="fixed" parent_frame="world" child_link="base_link"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
-    <disable_collisions link1="table_link" link2="ur10_base_link_inertia" reason="Adjacent"/>
-    <disable_collisions link1="table_link" link2="ur10_shoulder_link" reason="Never"/>
+
+    <!-- UR10 COLLISION DISABLES -->
     <disable_collisions link1="ur10_base_link_inertia" link2="ur10_shoulder_link" reason="Adjacent"/>
-    <disable_collisions link1="ur10_base_link_inertia" link2="ur10_upper_arm_link" reason="Never"/>
-    <disable_collisions link1="ur10_base_link_inertia" link2="ur10_wrist_1_link" reason="Never"/>
+    <disable_collisions link1="ur10_base_link_inertia" link2="table_link" reason="Adjacent"/>
     <disable_collisions link1="ur10_forearm_link" link2="ur10_upper_arm_link" reason="Adjacent"/>
     <disable_collisions link1="ur10_forearm_link" link2="ur10_wrist_1_link" reason="Adjacent"/>
-    <disable_collisions link1="ur10_gripper_base_link" link2="ur10_gripper_finger_left" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_base_link" link2="ur10_gripper_finger_right" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_base_link" link2="ur10_gripper_gripper_left" reason="Adjacent"/>
-    <disable_collisions link1="ur10_gripper_base_link" link2="ur10_gripper_gripper_right" reason="Adjacent"/>
-    <disable_collisions link1="ur10_gripper_base_link" link2="ur10_gripper_mounting_plate" reason="Adjacent"/>
-    <disable_collisions link1="ur10_gripper_base_link" link2="ur10_wrist_1_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_base_link" link2="ur10_wrist_2_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_base_link" link2="ur10_wrist_3_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_left" link2="ur10_gripper_finger_right" reason="Default"/>
-    <disable_collisions link1="ur10_gripper_finger_left" link2="ur10_gripper_gripper_left" reason="Adjacent"/>
-    <disable_collisions link1="ur10_gripper_finger_left" link2="ur10_gripper_gripper_right" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_left" link2="ur10_gripper_mounting_plate" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_left" link2="ur10_wrist_1_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_left" link2="ur10_wrist_2_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_left" link2="ur10_wrist_3_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_right" link2="ur10_gripper_gripper_left" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_right" link2="ur10_gripper_gripper_right" reason="Adjacent"/>
-    <disable_collisions link1="ur10_gripper_finger_right" link2="ur10_gripper_mounting_plate" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_right" link2="ur10_wrist_1_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_right" link2="ur10_wrist_2_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_finger_right" link2="ur10_wrist_3_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_gripper_left" link2="ur10_gripper_gripper_right" reason="Default"/>
-    <disable_collisions link1="ur10_gripper_gripper_left" link2="ur10_gripper_mounting_plate" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_gripper_left" link2="ur10_wrist_1_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_gripper_left" link2="ur10_wrist_2_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_gripper_left" link2="ur10_wrist_3_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_gripper_right" link2="ur10_gripper_mounting_plate" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_gripper_right" link2="ur10_wrist_1_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_gripper_right" link2="ur10_wrist_2_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_gripper_right" link2="ur10_wrist_3_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_mounting_plate" link2="ur10_wrist_1_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_mounting_plate" link2="ur10_wrist_2_link" reason="Never"/>
-    <disable_collisions link1="ur10_gripper_mounting_plate" link2="ur10_wrist_3_link" reason="Adjacent"/>
     <disable_collisions link1="ur10_shoulder_link" link2="ur10_upper_arm_link" reason="Adjacent"/>
-    <disable_collisions link1="ur10_shoulder_link" link2="ur10_wrist_1_link" reason="Never"/>
     <disable_collisions link1="ur10_wrist_1_link" link2="ur10_wrist_2_link" reason="Adjacent"/>
     <disable_collisions link1="ur10_wrist_1_link" link2="ur10_wrist_3_link" reason="Never"/>
+    <disable_collisions link1="ur10_wrist_1_link" link2="ur10_wrist_connector_link" reason="Never"/>
     <disable_collisions link1="ur10_wrist_2_link" link2="ur10_wrist_3_link" reason="Adjacent"/>
+    <disable_collisions link1="ur10_wrist_2_link" link2="ur10_wrist_connector_link" reason="Never"/>
+    <disable_collisions link1="ur10_wrist_3_link" link2="ur10_wrist_connector_link" reason="Adjacent"/>
 </robot>
+

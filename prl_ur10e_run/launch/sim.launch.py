@@ -9,8 +9,8 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch.conditions import IfCondition
 
-import os
-import yaml
+# import os
+# import yaml
 from ament_index_python.packages import get_package_share_directory
 
 def launch_setup(context):

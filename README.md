@@ -1,32 +1,19 @@
-#
-
-## Installation
-
-### 1.Docker setup:
-See README.md in /docker folder
-
-### 2.Install packages
-TODO
-
-Draft configuration for happypose setup
-
-```bash
-source /venv/bin/activate
-cd ws
-sudo apt update
-rosdep init
-rosdep update --rosdistro $ROS_DISTRO
-rosdep install -r -y -i --from-paths src --rosdistro $ROS_DISTRO
-colcon build --symlink-install
-source install/setup.bash
-ros2 launch happypose_examples megapose_demo.launch.py use_rviz:=true device:=cuda image_path:=/PATH/TO/IMAGE 
-```
+Paris Robotics Lab's UR10e - ROS2 implementation for the [AGIMUS project](https://www.agimus-project.eu/)
+---
+## Project overview
+This is the coding stack for one of the WP6 industrial pilots.
+It is heavily inspired by the ROS2 implementation of the [MANTIS workbench](https://github.com/inria-paris-robotics-lab/prl_ur5_ros2) of the same lab.
 
 ## **Prerequisites**
-
-- Docker must be installed on your machine (Tested on `linux/amd64`, not supported on ARM).
+There is two installations options:
+### 1. Local installation 
+Tools needed:
 - A compatible version of ROS 2 (Humble) must be installed and configured.
-- Gazebo for simulating the UR5 robot (if you intend to use simulation).
+- Gazebo for simulating the UR10e robot (if you intend to use simulation).
+
+### 2. Docker installation :
+Tools needed:
+- Docker must be installed on your machine (Tested on `linux/amd64`, not supported on ARM).
 
 ---
 
@@ -73,9 +60,9 @@ git clone https://github.com/inria-paris-robotics-lab/agimus_ur10.git
 
 #### Install Dependencies
 
-The **prl_ur5_description** package requires the following dependencies:
+The **prl_ur10e_description** package requires the following dependencies:
 
-- [prl_ur5_robot_configuration](https://github.com/inria-paris-robotics-lab/prl_ur10e_robot_configuration)
+- [prl_ur10e_robot_configuration](https://github.com/inria-paris-robotics-lab/prl_ur10e_robot_configuration)
 - [universal_robot_description](https://github.com/UniversalRobots/Universal_Robots_ROS2_Description)
 - [universal_robot_gazebo](https://github.com/UniversalRobots/Universal_Robots_ROS2_GZ_Simulation/tree/ros2)
 - [rq_fts_ros2_driver](https://github.com/panagelak/rq_fts_ros2_driver)
@@ -84,7 +71,7 @@ The **prl_ur5_description** package requires the following dependencies:
 - [OrbbecSDK_ROS2](https://github.com/orbbec/OrbbecSDK_ROS2/tree/v2-main)
 
 
-These packages provide configuration files, robot descriptions, simulation models, and force-torque sensor drivers that are necessary for the UR5 robot to operate properly in a ROS2 ecosystem.
+These packages provide configuration files, robot descriptions, simulation models, and force-torque sensor drivers that are necessary for the UR10e robot to operate properly in a ROS2 ecosystem.
 
 To install these dependencies, clone them into your workspace using the following commands:
 
@@ -152,10 +139,10 @@ source install/setup.bash
 
 ### **3. Setup Your Environment**
 
-Before using Mantis, you need to make a few modifications to the configuration.
-### **prl_ur5_robot_configuration**
+Before using the UR10e, you need to make a few modifications to the configuration:
 
-To configure your setup, edit the `prl_ur5_robot_configuration/config/standart_setup.yaml` file. Update the following parameters to match your hardware and network setup:
+### **prl_ur10e_robot_configuration**
+To configure your setup, edit the `prl_ur10e_robot_configuration/config/standard_setup.yaml` file. Update the following parameters to match your hardware and network setup:
 
 - **IP Address and Ports**: Specify the network interface and ports for the robot.
 - **Cameras**: Configure the hand-eye cameras, including their model and pose.
@@ -174,15 +161,15 @@ Ensure all parameters are correctly adjusted to reflect your specific setup.
 #### Only visualize Mantis in RViz
 
 ```bash
-ros2 launch prl_ur5_description view_mantis.launch.py
+ros2 launch prl_ur10e_description view_ur10e_setup.launch.py
 ```
 
 #### Simulate Mantis in Gazebo and Visualize in RViz
 
-To simulate Mantis in Gazebo and visualize it in RViz, use the following command:
+To simulate the robot in Gazebo and visualize it in RViz, use the following command:
 
 ```bash
-ros2 launch prl_ur5_gazebo start_gazebo_sim.launch.py
+ros2 launch prl_ur10e_gazebo start_gazebo_sim.launch.py
 ```
 
 ### **Using Simulation and MoveIt**
@@ -190,13 +177,13 @@ ros2 launch prl_ur5_gazebo start_gazebo_sim.launch.py
 To use MoveIt with the Mantis, you can launch the simulation with the following command:
 
 ```bash
-ros2 launch prl_ur5_run sim.launch.py
+ros2 launch prl_ur10e_run sim.launch.py
 ```
 
 Alternatively, you can customize the launch by enabling or disabling specific components such as RViz, Gazebo GUI, or MoveIt. Use the following command with the desired parameters:
 
 ```bash
-ros2 launch prl_ur5_run sim.launch.py launch_rviz:=<true|false> gazebo_gui:=<true|false> launch_moveit:=<true|false>
+ros2 launch prl_ur10e_run sim.launch.py launch_rviz:=<true|false> gazebo_gui:=<true|false> launch_moveit:=<true|false>
 ```
 
 Replace `<true|false>` with `true` to enable or `false` to disable each component as needed.
@@ -204,18 +191,18 @@ Replace `<true|false>` with `true` to enable or `false` to disable each componen
 
 ### **Use with Real Robot**
 
-To use the UR5 robot with a real setup, you need to modify the robot's network information in the standard setup file of the `prl_ur5_robot_configuration` package.
+To use the UR10e robot with a real setup, you need to modify the robot's network information in the standard setup file of the `prl_ur10e_robot_configuration` package.
 
 #### **Launch and Control the real Mantis**
 
 Use the following command to launch control of the real robot with moveit:
 
 ```bash
-ros2 launch prl_ur5_run real.launch.py
+ros2 launch prl_ur10e_run real.launch.py
 ```
 Alternatively, you can customize the launch by enabling or disabling specific components such as RViz or MoveIt. Use the following command with the desired parameters:
 ```bash
-ros2 launch prl_ur5_run real.launch.py launch_rviz:=<true|false> launch_moveit:=<true|false>
+ros2 launch prl_ur10e_run real.launch.py launch_rviz:=<true|false> launch_moveit:=<true|false>
 ```
 Replace `<true|false>` with `true` to enable or `false` to disable each component as needed.
 
@@ -231,4 +218,4 @@ For users intending to use the setup locally:
 
 
 # Known fixes to apply
-in /rq_fts_ros2_driver/robotic_sensor_description/urdf/robotiq_ft300.urdf.xacro changer ligne 59 par         <joint name="${tf_prefix}ft300_mounting_plate_joint" type="fixed">
+in /rq_fts_ros2_driver/robotic_sensor_description/urdf/robotiq_ft300.urdf.xacro change line 59 to `<joint name="${tf_prefix}ft300_mounting_plate_joint" type="fixed">`

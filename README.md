@@ -103,7 +103,7 @@ Ensure these steps are completed before proceeding with the setup.
 
 #### Install Workspace dependencies
 
-> [!IMPORTANT]: 
+> [!IMPORTANT]
 > To install dependencies and build the packages, you must have ROS 2 Jazzy installed locally. If you do not have ROS 2 Jazzy on your system, use the provided Docker environment (`docker-ros2`) for building and development.
 
 After cloning the dependencies, check and install others dependencies linked to each packages with `rosdep`:

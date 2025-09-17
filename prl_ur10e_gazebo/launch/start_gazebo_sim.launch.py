@@ -1,5 +1,5 @@
 ############################################################################################################
-# Description: This launch file starts the Gazebo simulation with the UR5 workbench.
+# Description: This launch file starts the Gazebo simulation with the UR10e workbench.
 #              The launch file starts the following nodes:
 #              - Robot state publisher
 #              - Gazebo

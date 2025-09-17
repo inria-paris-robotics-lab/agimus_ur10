@@ -27,7 +27,7 @@
 #               - launch_moveit: Launch MoveIt
 #               - activate_cameras: Activate cameras
 # Usage:
-#               $ ros2 launch prl_ur5_control reel.launch.py left_robot_ip:=<left_robot_ip> right_robot_ip:=<right_robot_ip> 
+#               $ ros2 launch prl_ur10e_run real.launch.py robot_ip:=<ip>
 ############################################################################################################
 from launch import LaunchDescription
 from launch.actions import (
@@ -126,7 +126,7 @@ def launch_setup(context):
 
     ###### UR Driver Side ######
 
-    # Dashboard client node, it enable us to made everything like we have the robot dashboard
+    # Dashboard client node, it enables us to make everything like we have the robot dashboard
     dashboard_client_node = Node(
         package="ur_robot_driver",
         condition=IfCondition(launch_dashboard_client),

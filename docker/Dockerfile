@@ -79,9 +79,8 @@ FROM base AS ros2_complete
 
 RUN sudo apt-get install -y ros-${ROS_DISTRO}-ur
 
-
 ################################
-# Complete image with gazebo 
+# Add gazebo 
 ################################
 
 FROM ros2_complete AS full
@@ -93,6 +92,12 @@ RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pk
     ros-${ROS_DISTRO}-ros-gz \
     ros-${ROS_DISTRO}-gz-ros2-control\
   && rm -rf /var/lib/apt/lists/*
+
+################################
+# Complete image with Force Torque sensor driver 
+################################
+
+RUN dpkg -i ros-jazzy-bota-driver_1.1.3-0noble_amd64.deb
 
 ################################
 #  Dev tools and non root user

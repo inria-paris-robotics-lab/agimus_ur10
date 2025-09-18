@@ -80,9 +80,9 @@ cd ws/src
 git clone https://github.com/inria-paris-robotics-lab/prl_ur10e_robot_configuration.git
 git clone https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git
 git clone https://github.com/panagelak/rq_fts_ros2_driver.git
-git clone -b ros2 https://github.com/inria-paris-robotics-lab/onrobot_ros.git
+git clone https://github.com/inria-paris-robotics-lab/onrobot_ros.git -b ros2
 git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-master
-git clone https://github.com/inria-paris-robotics-lab/wsg50-ros-pkg.git
+git clone https://github.com/inria-paris-robotics-lab/wsg50-ros-pkg.git -b feature/pal_finger
 ```
 > [!Warning]
 > If you plan to use the Orbbec Femto Mega, you must install the Orbbec SDK ROS 2 on your local machine. Follow these steps:

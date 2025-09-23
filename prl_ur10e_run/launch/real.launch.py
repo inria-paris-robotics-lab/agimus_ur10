@@ -15,8 +15,7 @@
 #               - ur10e_gripper_controllers.launch.py
 #               - sensors.launch.py
 # Arguments:
-#               - left_robot_ip: IP address of the left robot
-#               - right_robot_ip: IP address of the right robot
+#               - robot_ip: IP address of the robot
 #               - activate_joint_controller: Activate wanted joint controller.
 #               - launch_rviz: Launch RViz
 #               - launch_dashboard_client: Launch Dashboard Client
@@ -213,7 +212,24 @@ def launch_setup(context):
         ],
     )
 
-    # ###### Sensors ######
+    ###### Sensors ######
+    # Launch the force/torque driver node
+    # bota_driver_node = Node(
+    #     package='bota_driver',
+    #     executable='bota_driver_node',
+    #     output='screen',
+    #     parameters=[
+    #         {'config_file': os.path.join(
+    #             get_package_share_directory('prl_ur10e_robot_configuration'),
+    #             'config',
+    #             'ft_sensor_config.json'
+    #         )},
+    #         {'output_rate': 500},
+    #         {'bota_driver_node_name' : "bota_ft_sensor"},
+    #         {'bota_ft_sensor_link_name':"bota_ft_sensor"}
+    #     ]
+    # )
+
     # camera_launch = IncludeLaunchDescription(
     #     PythonLaunchDescriptionSource([
     #         PathJoinSubstitution([
@@ -249,6 +265,7 @@ def launch_setup(context):
         urscript_interface,
         rsp,
         rviz_node,
+        # bota_driver_node,
         # camera_launch,
         moveit_launch,
     ]

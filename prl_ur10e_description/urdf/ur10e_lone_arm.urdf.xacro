@@ -6,6 +6,9 @@
     <xacro:include filename="$(find ur_description)/urdf/inc/ur_joint_control.xacro" />
     <xacro:include filename="$(find ur_robot_driver)/urdf/ur.ros2_control.xacro"/>
 
+    <!-- force sensor  -->
+    <xacro:include filename="$(find prl_ur10e_description)/urdf/_force_sensor.urdf.xacro"/>
+
     <!-- gripper -->
     <xacro:include filename="$(find prl_ur10e_description)/urdf/_gripper.urdf.xacro"/>
 
@@ -89,13 +92,19 @@
             
         </xacro:unless>  
 
+        <!-- Force sensor -->
+        <xacro:force_sensor
+            prefix="${prefix}"
+            parent="tool0"
+            gz_sim="${gz_sim}"
+        />
+
         <!-- Gripper -->
-        <xacro:gripper gripper="${gripper}" prefix='${prefix}' parent="${prefix}tool" pose="${gripper_pose}" hardware_interface="${hw_interface}" gz_sim="${gz_sim}"/>
+        <xacro:gripper gripper="${gripper}" prefix='${prefix}' parent="${prefix}_wrench" pose="${gripper_pose}" hardware_interface="${hw_interface}" gz_sim="${gz_sim}"/>
 
 
         <!-- Tool frame -->
         <link name="${prefix}tool"/>
-        
 
         <joint name="${prefix}tool_joint" type="fixed">
             <origin xyz="0 0 0" rpy="0 0 ${-pi}"/>

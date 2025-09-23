@@ -94,13 +94,19 @@
 
         <!-- Force sensor -->
         <xacro:force_sensor
-            prefix="${prefix}"
+            prefix="${prefix}bota_ft"
             parent="tool0"
             gz_sim="${gz_sim}"
         />
 
         <!-- Gripper -->
-        <xacro:gripper gripper="${gripper}" prefix='${prefix}' parent="${prefix}_wrench" pose="${gripper_pose}" hardware_interface="${hw_interface}" gz_sim="${gz_sim}"/>
+        <xacro:gripper 
+            gripper="${gripper}"
+            prefix='${prefix}'
+            parent="${prefix}bota_ft_wrench"
+            pose="${gripper_pose}"
+            hardware_interface="${hw_interface}"
+            gz_sim="${gz_sim}"/>
 
 
         <!-- Tool frame -->

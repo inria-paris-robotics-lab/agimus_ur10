@@ -97,7 +97,7 @@ RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pk
 # Add force torque sensor driver
 ################################
 COPY bota_driver_install.sh /
-COPY ros-jazzy-bota-driver_1.1.3-0noble_amd64.deb /
+COPY ros-jazzy-bota-driver_1.1.3-0noble_amd64_MODIFIED.deb /
 RUN chmod +x /bota_driver_install.sh
 RUN ./bota_driver_install.sh
 

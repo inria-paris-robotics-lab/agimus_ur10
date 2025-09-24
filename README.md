@@ -24,8 +24,6 @@ There is two installations options :
 
 ### 2. Install and build `prl` packages
 Follow the steps below to set up the `prl` packages. These steps can be performed both inside and outside (only if you have ros2 jazzy locally) the Docker container. 
-<details>
-<summary> Click here for details ... </summary>  
 
 #### 1. Setup folders
 This is the only step that changes between docker and local installation.
@@ -130,11 +128,10 @@ source install/setup.bash
 > [!NOTE]
 > If you reopen your Docker container after installation, or open a new terminal (e.g., using byobu, tmux, etc.), you need to source the workspace again to be able to launch the project or see the running nodes in different terminals.
 
-</details>
+
 
 ___
 ### 3. Configure your setup
-<details><summary>Click here for details...</summary>
 
 The configuration is mainly done in `prl_ur10e_robot_configuration/config/standard_setup.yaml`. Update the following parameters to match your setup:
 
@@ -143,14 +140,9 @@ The configuration is mainly done in `prl_ur10e_robot_configuration/config/standa
 - **Gripper Type**: Define the type of gripper being used and its corresponding controller.
 - **Fixed Camera**: Set up any fixed cameras required for your application.
 
-</details>
-
 ---
 
 ### 4. Main command lines
-<details>
-<summary>Click for more details...</summary>
-
 #### Simulation
 **Option A: RViz visualization only :**
 
@@ -193,13 +185,12 @@ Default states :
 - launch_rviz:=false
 - launch_moveit:=true
 
-</details>
 
 ---
 ## Note about the force / torque sensor
 <details>
 <summary> Click here for details...</summary>
-The UR10e setup is equipped with a (BOTA LaxOne gen0)[https://shop.botasys.com/shop/laxone-gen-0-series-kit-2170] sensor. Its driver has been modified to remove interference with ros2 control.  
+The UR10e setup is equipped with a [BOTA LaxOne gen0](https://shop.botasys.com/shop/laxone-gen-0-series-kit-2170) sensor. Its driver has been modified to remove interference with ros2 control.  
 How to reverse the change:
 
 1. Navigate to the folder where the .deb is & create a temp folder
@@ -221,5 +212,5 @@ dpkg-deb -R ros-jazzy-bota-driver_1.1.3-0noble_amd64_MODIFIED.deb temp
 ```bash
 dpkg-deb -b temp NAME_OF_THE_NEW_PKG.deb
 ```
-7. Change the name of the .deb file in (/docker/bota_driver_install.sh)[/docker/bota_driver_install.sh]
+7. Change the name of the .deb file in [/docker/bota_driver_install.sh](/docker/bota_driver_install.sh)
 </details>

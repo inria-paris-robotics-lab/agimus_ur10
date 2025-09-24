@@ -190,7 +190,7 @@ Default states :
 ## Note about the force / torque sensor
 <details>
 <summary> Click here for details...</summary>
-The UR10e setup is equipped with a [BOTA LaxOne gen0](https://shop.botasys.com/shop/laxone-gen-0-series-kit-2170) sensor. Its driver has been modified to remove interference with ros2 control.  
+The UR10e setup is equipped with a BOTA LaxOne gen0 <https://shop.botasys.com/shop/laxone-gen-0-series-kit-2170> sensor. Its driver has been modified to remove interference with ros2 control.  
 How to reverse the change:
 
 1. Navigate to the folder where the .deb is & create a temp folder

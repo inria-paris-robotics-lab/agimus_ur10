@@ -10,14 +10,14 @@
                         ">
         <!-- force sensor -->
         <xacro:BFT_LAXS_ECAT_M8 prefix="${prefix}" />
-        
+
     <joint name="robot_mounting_link_to_bota_ft_sensor" type="fixed">
         <parent link="ur10_tool0" />
         <child link = "${prefix}_mounting" />
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
     </joint>
 
-        
+
         <xacro:if value="${gz_sim}">
             <!-- enable force_torque sensor -->
             <gazebo reference="${prefix}measurment_joint">

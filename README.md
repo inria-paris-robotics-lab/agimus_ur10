@@ -6,11 +6,11 @@ It is heavily inspired by the ROS2 implementation of the [MANTIS workbench](http
 
 ## **Prerequisites**
 There is two installations options :
-1. Local installation that requires:   
+1. Local installation that requires:
   - A compatible version of ROS 2 (Jazzy) ***must*** be installed and configured.
   - Gazebo for simulating the UR10e robot (if you intend to use simulation).
 
-2. Docker installation that requires  :  
+2. Docker installation that requires  :
   - Docker must be installed on your machine (Tested on `linux/amd64`, not supported on ARM).
 
 ---
@@ -23,14 +23,14 @@ There is two installations options :
 ---
 
 ### 2. Install and build `prl` packages
-Follow the steps below to set up the `prl` packages. These steps can be performed both inside and outside (only if you have ros2 jazzy locally) the Docker container. 
+Follow the steps below to set up the `prl` packages. These steps can be performed both inside and outside (only if you have ros2 jazzy locally) the Docker container.
 
 #### 1. Setup folders
 This is the only step that changes between docker and local installation.
 
 **Option A: Docker**
 > [!WARNING]
-> When working in a docker, any changes made outside the `share` directory will not be saved after you shut down the container.   
+> When working in a docker, any changes made outside the `share` directory will not be saved after you shut down the container.
 > Make sure to always work in that folder.
 
 ```bash
@@ -122,7 +122,7 @@ colcon build --symlink-install --packages-skip robotiq_ft_sensor_hardware
 source install/setup.bash
 ```
 
-> [!NOTE] 
+> [!NOTE]
 > After the build, you may see an error related to the realsense package. You can ignore this error, as it does not affect the setup.
 
 > [!NOTE]
@@ -190,7 +190,7 @@ Default states :
 ## Note about the force / torque sensor
 <details>
 <summary> Click here for details...</summary>
-The UR10e setup is equipped with a BOTA LaxOne gen0 sensor. Its driver has been modified to remove interference with ros2 control.  
+The UR10e setup is equipped with a BOTA LaxOne gen0 sensor. Its driver has been modified to remove interference with ros2 control.
 How to reverse the change:
 
 1. Navigate to the folder where the .deb is & create a temp folder

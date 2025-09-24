@@ -1,7 +1,7 @@
 # import logging
 # logging.root.setLevel(logging.DEBUG)
 ############################################################################################################
-# Description: This file is used to connect the real workbench with the ros2 environment. 
+# Description: This file is used to connect the real workbench with the ros2 environment.
 #              The launch file starts the following nodes:
 #               - Controller Manager
 #               - Controller Spawners
@@ -10,7 +10,7 @@
 #               - URScript Interface
 #               - RViz
 #               - Joint State Publisher
-#              The launch file also includes the following launch files:            
+#              The launch file also includes the following launch files:
 #               - ur10e_controllers.launch.py
 #               - ur10e_gripper_controllers.launch.py
 #               - sensors.launch.py
@@ -58,7 +58,7 @@ def launch_setup(context):
     rviz_config_file = PathJoinSubstitution([FindPackageShare("ur_description"), "rviz", "view_robot.rviz"])
     kinematics_file = LaunchConfiguration("kinematics_file")
     config_file = os.path.join(get_package_share_directory('prl_ur10e_robot_configuration'), 'config', 'standard_setup.yaml')
-    config_path = Path(config_file) 
+    config_path = Path(config_file)
     with config_path.open('r') as setup_file:
         config = yaml.safe_load(setup_file)
     robot_ip = config.get('arm')['network']['ip']
@@ -101,10 +101,10 @@ def launch_setup(context):
         ],
         output="screen",
     )
-    
+
     # Spawn controllers
     active_controllers = ",".join(["io_and_status_controller"]) + "," + ",".join(activate_controllers)
-    
+
     inactive_controllers = ",".join(loaded_controllers)
 
     print("Active controllers: ", active_controllers)
@@ -147,7 +147,7 @@ def launch_setup(context):
         ],
     )
 
-    # The URScript interface node is used to send URScript commands to the robot controller directly 
+    # The URScript interface node is used to send URScript commands to the robot controller directly
     urscript_interface = Node(
         package="ur_robot_driver",
         executable="urscript_interface",
@@ -172,7 +172,7 @@ def launch_setup(context):
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),  # Find the xacro executable
-            " ", 
+            " ",
             PathJoinSubstitution([FindPackageShare("prl_ur10e_description"), "urdf", "ur10e_complete_setup.urdf.xacro"]),
             " ",
             "gz_sim:=",

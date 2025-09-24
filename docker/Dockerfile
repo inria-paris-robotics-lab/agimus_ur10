@@ -21,7 +21,7 @@ ENV LANG=en_US.UTF-8
 ENV TERM=xterm-256color
 ENV SHELL=/bin/bash
 
-RUN apt-get -y update && apt-get -y upgrade 
+RUN apt-get -y update && apt-get -y upgrade
 
 # Install timezone
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
@@ -68,7 +68,7 @@ ENV PYTHONPATH=/opt/ros/${ROS_DISTRO}/local/lib/python3.10/dist-packages:/opt/ro
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 
 RUN rosdep init \
-  &&rosdep update 
+  &&rosdep update
 
 
 ################################
@@ -80,7 +80,7 @@ FROM base AS ros2_complete
 RUN sudo apt-get install -y ros-${ROS_DISTRO}-ur
 
 ################################
-# Add gazebo 
+# Add gazebo
 ################################
 
 FROM ros2_complete AS full
@@ -113,7 +113,7 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
     xauth \
     && rm -rf /var/lib/apt-get/lists/*
 
-# Install docker 
+# Install docker
 RUN sudo apt-get update && apt-get install -y ca-certificates curl \
   && sudo install -m 0755 -d /etc/apt/keyrings \
   && sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
@@ -126,7 +126,7 @@ RUN sudo apt-get update && apt-get install -y ca-certificates curl \
 
 RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# RUN sudo groupmod -g ${DOCKERGRP} docker 
+# RUN sudo groupmod -g ${DOCKERGRP} docker
 
 # Install dev tools
 RUN apt-get update && apt-get install -y --no-install-recommends\
@@ -136,8 +136,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
   nano \
   && rm -rf /var/lib/apt-get/lists/*
 
-#byobu disable by default 
-RUN byobu-enable 
+#byobu disable by default
+RUN byobu-enable
 
 # Create non root user matching host user
 ARG USERNAME=ros
@@ -167,23 +167,23 @@ WORKDIR /home/${USERNAME}
 RUN mkdir share
 
 # ################################
-# # Install HappyPose 
+# # Install HappyPose
 # ################################
 
 # # Install git & python
 # RUN sudo apt-get update &&  sudo apt-get install git -y \
 #     && sudo apt-get install python3 -y \
 #     && sudo apt-get install python3-pip -y \
-#     && sudo apt-get install python3-venv -y \ 
-#     && sudo apt-get install ffmpeg -y \ 
+#     && sudo apt-get install python3-venv -y \
+#     && sudo apt-get install ffmpeg -y \
 #     && sudo apt-get install v4l-utils -y \
 #     && sudo apt-get install -y libx11-dev \
-#     && sudo apt-get install -y python3-tk 
+#     && sudo apt-get install -y python3-tk
 
 # RUN python3 -m venv /home/ros/venv
 
 # # Activate venv
-# ENV PATH="/home/ros/venv/bin:$PATH" 
+# ENV PATH="/home/ros/venv/bin:$PATH"
 # RUN pip install numpy \
 #   && pip install --upgrade certifi --no-cache-dir\
 #   && sudo  rm -rf /root/.cache/pip
@@ -207,8 +207,7 @@ RUN mkdir share
 
 # RUN python -m happypose.toolbox.utils.download --megapose_models
 
-# ENV PYTHONPATH=/home/${USERNAME}/share/hpose_ws/build/happypose_ros:/home/${USERNAME}/share/hpose_ws/install/happypose_ros/lib/python3.12/site-packages:/home/${USERNAME}/share/hpose_ws/install/happypose_msgs/lib/python3.12/site-packages:/opt/${USERNAME}/${ROS_DISTRO}/lib/python3.12/site-packages:/home/happypose:/home/${USERNAME}/venv/lib/python3.12/site-packages 
+# ENV PYTHONPATH=/home/${USERNAME}/share/hpose_ws/build/happypose_ros:/home/${USERNAME}/share/hpose_ws/install/happypose_ros/lib/python3.12/site-packages:/home/${USERNAME}/share/hpose_ws/install/happypose_msgs/lib/python3.12/site-packages:/opt/${USERNAME}/${ROS_DISTRO}/lib/python3.12/site-packages:/home/happypose:/home/${USERNAME}/venv/lib/python3.12/site-packages
 
 # #TODO see if another option
 # WORKDIR /home
-

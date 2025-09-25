@@ -16,9 +16,9 @@ There is two installations options :
 ---
 ## Installation
 
-### 1. Docker Setup (for `docker-ros2`)
+### 1. Docker Setup (for `docker`)
 
-**See [docker-ros2/README.md](docker-ros2/README.md)**
+**See [docker/README.md](docker/README.md)**
 
 ---
 

@@ -65,6 +65,7 @@ docker_cmd=(
   --user="$user"
   --workdir="$workdir"
   --mount type=bind,source="$storage",target="$workdir/share"
+  --group-add dialout
 )
 
 # Add GPU runtime if needed

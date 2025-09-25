@@ -167,23 +167,24 @@ WORKDIR /home/${USERNAME}
 RUN mkdir share
 
 # ################################
-# # Install HappyPose
+# # Install HappyPose 
 # ################################
 
 # # Install git & python
 # RUN sudo apt-get update &&  sudo apt-get install git -y \
 #     && sudo apt-get install python3 -y \
 #     && sudo apt-get install python3-pip -y \
-#     && sudo apt-get install python3-venv -y \
-#     && sudo apt-get install ffmpeg -y \
+#     && sudo apt-get install python3-venv -y \ 
+#     && sudo apt-get install ffmpeg -y \ 
 #     && sudo apt-get install v4l-utils -y \
 #     && sudo apt-get install -y libx11-dev \
-#     && sudo apt-get install -y python3-tk
+#     && sudo apt-get install -y python3-tk 
 
 # RUN python3 -m venv /home/ros/venv
 
 # # Activate venv
 # ENV PATH="/home/ros/venv/bin:$PATH"
+
 # RUN pip install numpy \
 #   && pip install --upgrade certifi --no-cache-dir\
 #   && sudo  rm -rf /root/.cache/pip
@@ -207,7 +208,7 @@ RUN mkdir share
 
 # RUN python -m happypose.toolbox.utils.download --megapose_models
 
-# ENV PYTHONPATH=/home/${USERNAME}/share/hpose_ws/build/happypose_ros:/home/${USERNAME}/share/hpose_ws/install/happypose_ros/lib/python3.12/site-packages:/home/${USERNAME}/share/hpose_ws/install/happypose_msgs/lib/python3.12/site-packages:/opt/${USERNAME}/${ROS_DISTRO}/lib/python3.12/site-packages:/home/happypose:/home/${USERNAME}/venv/lib/python3.12/site-packages
+# ENV PYTHONPATH=/home/${USERNAME}/share/hpose_ws/build/happypose_ros:/home/${USERNAME}/share/hpose_ws/install/happypose_ros/lib/python3.12/site-packages:/home/${USERNAME}/share/hpose_ws/install/happypose_msgs/lib/python3.12/site-packages:/opt/${USERNAME}/${ROS_DISTRO}/lib/python3.12/site-packages:/home/happypose:/home/${USERNAME}/venv/lib/python3.12/site-packages 
 
 # #TODO see if another option
 # WORKDIR /home

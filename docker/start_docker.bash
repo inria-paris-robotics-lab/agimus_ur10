@@ -5,7 +5,7 @@ IMAGE_TAG="jazzy"
 
 # Build the image if it doesn't exist
 if ! docker image inspect "${IMAGE_NAME}:${IMAGE_TAG}" > /dev/null 2>&1; then
-  docker build  -t "${IMAGE_NAME}:${IMAGE_TAG}" . --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g) 
+  docker build  -t "${IMAGE_NAME}:${IMAGE_TAG}" . --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g)
 fi
 
 xhost +local:docker > /dev/null 2>&1
@@ -56,7 +56,7 @@ docker_cmd=(
   --env="QT_X11_NO_MITSHM=1"
   --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw"
   --volume="$XAUTHORITY:/dot.Xauthority"
-  --device=/dev/video9:/dev/video9 
+  --device=/dev/video9:/dev/video9
   --device=/dev/video13:/dev/video13
   --privileged
   --net="host"

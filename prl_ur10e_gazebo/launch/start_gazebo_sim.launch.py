@@ -6,7 +6,7 @@
 #              - Ignition spawn entity
 #              - Gazebo Bridge
 #              - Rviz
-#              The launch file also includes the following launch files:            
+#              The launch file also includes the following launch files:
 #              - Gazebo simulation launch file
 #              - Workbench controllers launch file
 #              - Gripper controllers launch file
@@ -100,7 +100,7 @@ def launch_setup(context):
 
     ###### Gazebo ######
 
-    # Gazebo launch 
+    # Gazebo launch
     with open(config_file, 'r') as setup_file:
         config = yaml.safe_load(setup_file)
 
@@ -180,7 +180,7 @@ def launch_setup(context):
             PathJoinSubstitution([
             FindPackageShare('prl_ur10e_control'),
             'launch',
-            'ur10e_controllers.launch.py', 
+            'ur10e_controllers.launch.py',
             ])
         ]),
         launch_arguments={
@@ -192,7 +192,7 @@ def launch_setup(context):
     with open(config_file, 'r') as setup_file:
         config = yaml.safe_load(setup_file)
 
-    gripper_controller = config.get('arm')['gripper_controller']   
+    gripper_controller = config.get('arm')['gripper_controller']
 
     gripper_controller = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -208,7 +208,7 @@ def launch_setup(context):
         ],
     )
 
-    return [robot_state_publisher, 
+    return [robot_state_publisher,
             gazebo,
             bridge,
             ignition_spawn_entity,

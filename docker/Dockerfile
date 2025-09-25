@@ -21,7 +21,7 @@ ENV LANG=en_US.UTF-8
 ENV TERM=xterm-256color
 ENV SHELL=/bin/bash
 
-RUN apt-get -y update && apt-get -y upgrade 
+RUN apt-get -y update && apt-get -y upgrade
 
 # Install timezone
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
@@ -68,7 +68,7 @@ ENV PYTHONPATH=/opt/ros/${ROS_DISTRO}/local/lib/python3.10/dist-packages:/opt/ro
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 
 RUN rosdep init \
-  &&rosdep update 
+  &&rosdep update
 
 
 ################################
@@ -79,9 +79,8 @@ FROM base AS ros2_complete
 
 RUN sudo apt-get install -y ros-${ROS_DISTRO}-ur
 
-
 ################################
-# Complete image with gazebo 
+# Add gazebo
 ################################
 
 FROM ros2_complete AS full
@@ -95,6 +94,14 @@ RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pk
   && rm -rf /var/lib/apt/lists/*
 
 ################################
+# Add force torque sensor driver
+################################
+COPY bota_driver_install.sh /
+COPY ros-jazzy-bota-driver_1.1.3-0noble_amd64_MODIFIED.deb /
+RUN chmod +x /bota_driver_install.sh
+RUN ./bota_driver_install.sh
+
+################################
 #  Dev tools and non root user
 ################################
 
@@ -106,7 +113,7 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
     xauth \
     && rm -rf /var/lib/apt-get/lists/*
 
-# Install docker 
+# Install docker
 RUN sudo apt-get update && apt-get install -y ca-certificates curl \
   && sudo install -m 0755 -d /etc/apt/keyrings \
   && sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
@@ -119,7 +126,7 @@ RUN sudo apt-get update && apt-get install -y ca-certificates curl \
 
 RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# RUN sudo groupmod -g ${DOCKERGRP} docker 
+# RUN sudo groupmod -g ${DOCKERGRP} docker
 
 # Install dev tools
 RUN apt-get update && apt-get install -y --no-install-recommends\
@@ -129,8 +136,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
   nano \
   && rm -rf /var/lib/apt-get/lists/*
 
-#byobu disable by default 
-RUN byobu-enable 
+#byobu disable by default
+RUN byobu-enable
 
 # Create non root user matching host user
 ARG USERNAME=ros
@@ -176,7 +183,8 @@ RUN mkdir share
 # RUN python3 -m venv /home/ros/venv
 
 # # Activate venv
-# ENV PATH="/home/ros/venv/bin:$PATH" 
+# ENV PATH="/home/ros/venv/bin:$PATH"
+
 # RUN pip install numpy \
 #   && pip install --upgrade certifi --no-cache-dir\
 #   && sudo  rm -rf /root/.cache/pip
@@ -204,4 +212,3 @@ RUN mkdir share
 
 # #TODO see if another option
 # WORKDIR /home
-

@@ -5,8 +5,8 @@
   <xacro:arg name="real_robot" default="false"/>
 
   <!-- Setup files -->
-  <xacro:arg name="controller_file" default="$(find prl_ur10e_control)/config/ur10e_controller.yaml"/>  
-  <xacro:property name="setup_file" value="${xacro.load_yaml('$(find prl_ur10e_robot_configuration)/config/standard_setup.yaml')}"/> 
+  <xacro:arg name="controller_file" default="$(find prl_ur10e_control)/config/ur10e_controller.yaml"/>
+  <xacro:property name="setup_file" value="${xacro.load_yaml('$(find prl_ur10e_robot_configuration)/config/standard_setup.yaml')}"/>
 
   <!-- ur10e arm -->
   <xacro:include filename="$(find prl_ur10e_description)/urdf/ur10e_lone_arm.urdf.xacro"/>
@@ -25,7 +25,7 @@
         <mesh filename="file://$(find prl_ur10e_description)/model/UR10e_stand.stl"/>
       </geometry>
       <material name="Blue"/>
-    </visual> 
+    </visual>
     <collision>
       <geometry>
         <mesh filename="file://$(find prl_ur10e_description)/model/UR10e_stand.stl"/>
@@ -37,7 +37,7 @@
     <child link = "table_link"/>
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
   </joint>
-  
+
   <!-- Lone Arm -->
   <xacro:property name="arm" value="${setup_file.get('arm')}"/>
   <xacro:arm prefix="ur10_"
@@ -67,6 +67,6 @@
     <parent link="base_link" />
     <child link="prl_ur10e_base" />
     <origin xyz="0 0 0.82" rpy="0 0 0" />
-  </joint> 
+  </joint>
 
 </robot>

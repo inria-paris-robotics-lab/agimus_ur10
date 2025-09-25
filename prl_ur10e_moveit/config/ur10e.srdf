@@ -31,7 +31,7 @@
         <xacro:property name="ur10_gripper_name" value="weiss-wsg50"/>
     </xacro:if>
 
-    
+
     <!-- if onrobot-rg2 -->
     <xacro:if value="${setup['arm']['gripper'] == 'onrobot-rg2'}">
         <xacro:property name="ur10_gripper_name" value="onrobot_rg2"/>
@@ -94,5 +94,5 @@
     <disable_collisions link1="ur10_wrist_1_link" link2="ur10_wrist_2_link" reason="Adjacent"/>
     <disable_collisions link1="ur10_wrist_1_link" link2="ur10_wrist_3_link" reason="Never"/>
     <disable_collisions link1="ur10_wrist_2_link" link2="ur10_wrist_3_link" reason="Adjacent"/>
+    <disable_collisions link1="ur10_bota_ft_mounting" link2="ur10_gripper_mounting_plate" reason="Adjacent"/>
 </robot>
-

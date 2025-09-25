@@ -171,7 +171,11 @@ Default states :
 
 
 #### Real Robot
-
+You must first setup the ethercat permissions needed to use the force/torque sensor :
+```bash
+ros2 run bota_driver set_ethercat_network_capabilities
+```
+ You can then launch the control with:
 ```bash
 ros2 launch prl_ur10e_run real.launch.py
 ```
